@@ -1,0 +1,28 @@
+{
+  "name": "laravel-test",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "docker:up": "docker-compose up -d",
+    "docker:stop": "docker-compose stop",
+    "docker:restart": "docker-compose restart",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs",
+    "docker:exec:php": "docker-compose exec php /bin/sh",
+    "docker:exec:nginx": "docker-compose exec nginx /bin/sh",
+    "docker:exec:mysql": "docker-compose exec mysql /bin/bash"
+  },
+  "author": "yokotak0527",
+  "engins": {
+    "node": ">=10.15.*",
+    "npm": ">=6.9.*"
+  },
+  "browserslist": [
+    "> 2% in JP"
+  ],
+  "devDependencies": {
+  },
+  "dependencies": {
+  }
+}
