@@ -1,0 +1,41 @@
+version: '3.7'
+
+# ==============================================================================
+# SERVICES
+#
+services:
+    # --------------------------------------------------------------------------
+    # MySQL
+    #
+    mysql:
+        image: 'docker-lemp-mysql:1.0.0'
+        container_name: 'mysql'
+        build:
+            context: './mysql'
+        environment:
+            - 'MYSQL_DATABASE=sample'    # データベース名
+            - 'MYSQL_USER=user'          # ユーザーID
+            - 'MYSQL_PASSWORD=user'      # ユーザーパスワード
+            - 'MYSQL_ROOT_PASSWORD=root' # MySQLルートパスワード
+    # --------------------------------------------------------------------------
+    # PHP
+    #
+    php:
+        image: 'docker-lemp-php:1.0.0'
+        container_name: 'php'
+        build:
+            context: './php'
+            args:
+                - "USER_NAME=www-user"
+                - "USER_UID=1000"
+    # --------------------------------------------------------------------------
+    # nginx
+    #
+    nginx:
+        image: 'docker-lemp-nginx:1.0.0'
+        container_name: 'nginx'
+        build:
+            context: './nginx'
+            args:
+                - "USER_NAME=www-user"
+                - "USER_UID=1000"

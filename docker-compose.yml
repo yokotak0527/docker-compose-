@@ -8,34 +8,38 @@ services:
     # MySQL
     #
     mysql:
-        image: 'laravel-test-mysql-image:1.0.0'
-        container_name: 'mysql'
-        build:
-            context: './mysql'
+        image: 'docker-lemp-mysql:1.0.0'
+        container_name: 'docker-lemp-mysql'
         environment:
-            - 'MYSQL_DATABASE=laravel-test' # データベース名
-            - 'MYSQL_USER=user'             # ユーザーID
-            - 'MYSQL_PASSWORD=user'         # ユーザーパスワード
-            - 'MYSQL_ROOT_PASSWORD=root'    # MySQLルートパスワード
-        ports:
-            - '3306:3306'
-        # volumes:
-        #     - ./docker/mysql/config/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+            - 'MYSQL_DATABASE=sample'    # データベース名
+            - 'MYSQL_USER=user'          # ユーザーID
+            - 'MYSQL_PASSWORD=user'      # ユーザーパスワード
+            - 'MYSQL_ROOT_PASSWORD=root' # MySQLルートパスワード
     # --------------------------------------------------------------------------
     # nginx
     #
-    # nginx:
-    #     image: 'nginx:1-alpine'
-    #     container_name: 'laravel-test_nginx'
-    #     ports:
-    #         - '80:80'
-    #         - '443:443'
-    # # --------------------------------------------------------------------------
-    # # PHP
-    # #
-    # php:
-    #     image: 'php:7.3-fpm-alpine'
-    #     container_name: 'laravel-test_php'
+    nginx:
+        image: 'docker-lemp-nginx:1.0.0'
+        container_name: 'docker-lemp-nginx'
+        ports:
+            - '80:80'
+            - '443:443'
+        depends_on:
+            - 'php'
+        volumes:
+            - './docker/nginx/conf.d:/etc/nginx/conf.d/:ro'
+            - './docker/nginx/ssl/:/etc/nginx/ssl/:ro'
+            - './html/:/var/www/html/'
+    # --------------------------------------------------------------------------
+    # PHP
+    #
+    php:
+        image: 'docker-lemp-php:1.0.0'
+        container_name: 'docker-lemp-php'
+        depends_on:
+            - 'mysql'
+        volumes:
+            - './html/:/var/www/html/'
 
 # ==============================================================================
 # VOLUME
